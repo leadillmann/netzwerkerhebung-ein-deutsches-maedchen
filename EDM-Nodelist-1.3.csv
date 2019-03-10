@@ -1,0 +1,263 @@
+id,name,sex,type,nazi-weight
+HBS,Heidi Benneckenstein,1,1,2
+FBS,Felix Benneckenstein,2,1,2
+SBS,Sohn Benneckenstein,2,1,2
+OMMS,Oma Mütterlicherseits,1,1,0
+OPMS,Opa Mütterlicherseits,2,1,0
+BJ,BILD Journalist,2,1,2
+MR,Mutter Redeker von Heidi,1,1,2
+BF,Beste Freundin,1,1,2
+VR,Vater Redeker von Heidi,2,1,2
+OPVS,Opa Väterlicherseits,2,1,2
+OMVS,Oma Väterlicherseits,1,1,2
+L1,Erste Lehrerin die sie nicht mochte,1,1,2
+BFC,Beste Freundin Carolin,1,1,2
+LI,Librada das Sport Mädchen,1,1,2
+TH,Therapie,NA,4,1
+L2,Lehrerin zwei die sie mochte,1,1,2
+THIN,Therapeutin,1,1,2
+KZ,Konzentrationslager Dachau Besuch,NA,4,1
+POL,Polizei,NA,2,0
+JN,Junge Nationaldemokraten,NA,2,2
+HDJ,Heimattreue Deutsche Jugend,NA,2,2
+NPD,Nationaldemokratische Partei Deutschlands,NA,2,3
+DVU,Deutsche Volksunion,NA,2,2
+NSU,Nationalsozialistischer Untergrund,NA,2,3
+FVE,Freunde von Eltern,NA,1,1
+BDM,Bund Deutscher Mädel,NA,2,3
+FVH,Freundinnen von Heidi,1,1,0
+KRCH,Kirche,NA,2,0
+ASR1,Älteste Schwester R von Heidi,1,1,0
+ASR2,Ältere Schwester R von Heidi,1,1,0
+JSR,Jüngere Schwester R von Heidi,1,1,0
+SCH,Schule,NA,4,0
+LDFNJ,Liederbuch der deutsche flämischen und nordländischen Jugend,NA,3,2
+AP,Ahnenpass,NA,3,2
+ST,Stahlgewitter,2,3,3
+LS,Landser,2,3,3
+GBS,Gigi und die braunen Stadtmusikanten,2,3,3
+EF,Erster fester Freund,2,1,2
+BHiJ,Braunes Haus in Jena,NA,4,3
+NAL,Nazi Aussteiger Literatur,NA,3,0
+TUN,Talkshows und Nachrichten,NA,3,0
+BIMB,Baska und ihre Männer Buch,NA,3,2
+PAZ,Preußische Allgemeine Zeitung ,NA,3,2
+HR,Haus Redeker,NA,4,1
+HRF,Heinz Rühmann Filme,NA,3,1
+SF,Sissi Filme,NA,3,0
+EMS,Eisenbahn Modell Spiel,NA,4,0
+SV,Schützenverein,NA,2,0
+NR,Nachbarn der Redeker,NA,1,0
+ZOLL,Zoll,NA,2,0
+AMP,Amerikanische Produkte,NA,4,0
+ALDI,Aldi,NA,4,0
+PK,Pumuckl Kasetten,NA,3,0
+BBK,Bibi Blocksberg Kassetten ,NA,3,0
+DM,Deutsche Märsche,NA,4,2
+BM,Bob Marley,2,1,0
+HH,Hip Hop,NA,3,0
+BIB,Bibel,NA,3,0
+VSS,Vorbereitungskurs Streitschlichtung,NA,4,0
+KITA,Kindertagesstätte,NA,4,0
+KGS,Klassengemeinschaft,NA,4,0
+KR,Krieg,NA,4,NA
+FVV,Freundin von Vater,1,1,2
+PFF,Pflegefamilie,NA,4,NA
+FGA,Familiengutachter,2,2,0
+WTAF,Die Wahrheit über das Tagebuch der Anne Frank Buch,NA,3,2
+UM,Ungarisches Mädchen Einheimische,1,1,0
+DK,Dorfkinder Kaliningrad,NA,1,0
+DMU,Dietmar Munier,2,1,2
+GST,Gesellschaft für die Siedlungsförderung in Trakehnen mbH,NA,2,2
+SPE,Spender,NA,2,2
+AMS,Agnes Miegel Siedlung,NA,4,2
+AM,Agnes Miegel,1,1,3
+RE,Richard Edmonds,2,1,2
+BNP,British National Party,NA,2,2
+HF,Herbert Fritz,2,1,2
+NZ,Nationalzeitung,NA,3,2
+GE,Götz Eberbach,2,1,2
+HGWSS,Hilfsgemeinschaft auf Gegenseitigkeit der Soldaten der ehem Waffen SS,NA,2,2
+RD,Russland Deutsche Gäste,NA,1,2
+BRL,Bibliothek rechtspopulistischer Literatur,NA,3,2
+BHJ,Bund Heimattreuer Jugend,NA,2,2
+WJ,Wiking Jugend,NA,2,2
+FR,Frank Rennicke,2,1,2
+GK,Gundolf Köhler,2,1,2
+OFA,Oktoberfest Attentat von 1980,NA,2,NA
+WS,Wolfgang Schäuble,2,1,0
+HJ,Hitler Jugend,NA,2,3
+DEJ,Der Ewige Jude NS Propaganda Film,NA,3,2
+HA,Heinrich Anacker,2,1,2
+DWE,Die Waage Europas NS Gedicht,NA,3,2
+DKJ,Deutsche Katholische Jugend,NA,2,0
+EHDJK,Eltern der HDJ Kinder,NA,1,1
+KPF,Katholische Pfadfinder,NA,1,0
+JZ,Zwölfjähriger Junge aus Lager in den sich HBS verliebt,2,1,1
+LF,Lagerführer,2,1,2
+BRDG,krankhafte BRD-Gesellschaft,NA,2,0
+FMS,fremdes Mädchen im HDJ Lager mit dem sich Schwester von Heidi stritt,1,1,1
+FMSZ,fremdes Mädchen im HDJ Lager dass von Lagerführer geschlagen,1,1,1
+BUS,Bundesführer,2,1,2
+HDJA,HDJ Aktivitäten Singen Handwerken Marschieren Sport,NA,4,2
+DJV,Deutsches Jungvolk,NA,2,2
+RAD,Ragnar D,2,1,2
+CHF,Christian F,2,1,2
+DAK,Daniela K,1,1,2
+MKGF,Mutter einer Kindergartenfreundin,1,1,0
+FF,Funkenflug Zeitschrift der HDJ,NA,3,2
+WES,Werner Sombart,2,1,0
+TIN,Tino Müller,2,1,2
+DAP,David Petereit,2,1,2
+DWW,Der Weisse Wolf Zeitung,NA,3,2
+ALB,Alf Börm,2,1,2
+JÖH,Jörg Hähnel,2,1,2
+ALS,Alexander Scholz,2,1,2
+DFWL,Der Freiheit wildes Lied Musik CD,NA,3,2
+ALSS,Alexander Scholz Sohn,2,1,1
+ALSF,Alexander Scholz Frau,1,1,1
+SER,Sebastian Räbiger,2,1,2
+IGFL,Interessengemeinschaft Fahrten und Lager,NA,2,2
+DJS,Deutscher Jugendbund Sturmvogel,NA,2,2
+IM,Innenministerium,NA,2,0
+AFPA,Antifaschistische Pressearchiv,NA,3,0
+BZB,Bildungszentrum Berlin,NA,2,0
+AGGG,Artgemeinschaft Germanische Glaubensgemeinschaft wesensgemäßer Lebensgestaltung,NA,2,2
+JUR,Jürgen Rieger,2,1,2
+WON,Rechtsanwalt Wolfram Nahrath,2,1,2
+NAC,Nahrath Clan,NA,2,2
+RAW,Ralf Wohlleben,2,1,2
+RW,Race War Skinhead Band,NA,3,2
+SYS,Sylvia Stolz,1,1,2
+RAN,Raoul Nahrath Großvater von Wolfram,2,1,2
+WGN,Wolfgang Nahrath Vater von Wolfram,2,1,2
+MAS,Mädelsache Buch,NA,3,0
+ANS,Andreas Speit,2,1,0
+ANR,Andrea Röpke,1,1,0
+STK,Störkraft Rechtsrock Band,NA,3,2
+NAM,17 und 18 jährige Nazi Mädchen,1,1,1
+TAP,Tanja Privenau junge Aussteigerin,1,1,1
+RNF,Ring Nationaler Frauen,NA,2,2
+AKM,Arbeitskreis Mädelschar,NA,2,2
+DD,Düütsche Deerns,NA,2,2
+NPDT,NPD Treffen,NA,4,2
+UDP,Udo Pastörs,2,1,2
+SIS,Sigrid Schüssel,1,1,2
+BEZ,Beate Zschäpe,1,1,3
+UWM,Uwe Mundlos,2,1,3
+UWB,Uwe Böhnhardt,2,1,3
+FDV,Fest der Völker Rechtsrock Festival,NA,4,2
+TTNJ,Thüringentag der nationalen Jugend,NA,2,NA
+TIB,Tino Brandt,2,1,2
+HOA,Holger Apfel,2,1,2
+TOL,Torsten Lemmer,2,1,2
+HNL,Hamlet Naziline Theaterstück,NA,3,0
+CHS,Christoph Schlingensief,2,1,0
+KSE,Kameradschaft Erding,NA,2,2
+KSA,Kameradschaft Augsburg,NA,2,2
+KSF,Kameradschaft Freising,NA,2,2
+SZ,Süddeutsche Zeitung,NA,3,0
+FBSF,Felix Benneckenstein Freundin Corinna Name geändert,1,1,1
+FBSV,Felix Benneckenstein Vater,2,1,0
+FBSM,Felix Benneckenstein Mutter,1,1,0
+C,Christoph Name geändert,2,1,1
+M,Max Name geändert,2,1,1
+S,Steffen Name geändert,2,1,1
+NOB,Norman Bordin,2,1,2
+KSAS,Kameradschaft Süd  Aktionsbüro Süddeutschland,NA,2,2
+AN,Autonome Nationalisten,NA,2,2
+HAN,Handbuch der Autonomen Nationalisten,NA,3,2
+PNKJ,Punks aus dem Jugendzentrum,NA,1,0
+IND,Inder Nachbar von Felix und Corinna,2,1,0
+ETT,Erdinger Tage der Toleranz Stadtfest,NA,4,0
+PNKS,Punks auf dem Stadtfest  Tage der Toleranz,NA,1,0
+BEA,Beamter auf Stadtfest,2,1,0
+KSDR,Kameradschaft Dresden,NA,2,2
+VRZF,Vater Redeker Zweite Freundin Stiefmutter von Heidi,1,1,2
+MIB,Michael Berger,2,1,2
+KSDO,Kameradschaft Dortmund,NA,2,2
+FRB,Friedhelm Busse SS Siggi,2,1,3
+KLF,Kameraden die sich auf Linken Flügel der NSDAP beriefen,NA,1,1
+RGR,Rechte Gewalt in Rostock,NA,4,NA
+RGM,Rechte Gewalt in Mölln,NA,4,1
+RGS,Rechte Gewalt in Solingen,NA,4,1
+AMSY,Attentat Münchner Synagoge,NA,4,NA
+MAW,Martin Wiese,2,1,2
+KSM,Kameradschaft München,NA,2,2
+FNM,Freie Nationalisten München,NA,2,2
+DR,Die Rechte,NA,2,2
+DDW,Der Dritte Weg,NA,2,2
+ANA,Antifa Aktivisten,NA,2,0
+AH,Adolf Hitler,2,1,3
+USA,United States of America,NA,4,0
+JUD,Juden,NA,4,0
+WST,Der Westen,NA,4,0
+AUSL,Ausländer,NA,1,0
+JKNG,Junge aus Kongo in Hauptschule,2,1,0
+ISL,Islam bzw vermeintliche Islamisierung Deutschlands,NA,4,0
+PAD,Pädophile,NA,1,0
+ANM,Annett Müller,1,1,2
+THF,Thiazi Forum rechte Internetplattform,NA,4,3
+ALM,Altermedia rechte Internetplattform,NA,4,2
+TFRB,Thiazi Forum User Fritz Brand,2,1,2
+TFO,Thiazi Forum Userin Osiris,1,1,2
+TFS,Thiazi Forum Userin Siglinde,1,1,2
+HEG,Hermann Göring,2,1,3
+MAB,Martin Bormann,2,1,3
+RUH,Rudolf Heß,2,1,3
+HAR,Hanna Reisch,1,1,2
+NSFD,Niederschlesisches Feriendorf von VR,NA,4,0
+WSF,Wintersonnwendfeier der HDJ,NA,4,0
+SSW,Stiefschwester von Heidi Tochter von VR zweiter Freundin,1,1,1
+DTS,Deutsche Stimme Zeitung der NPD,NA,3,2
+SLE,Sleipnir Rechtsrock Band,NA,3,2
+MDR,Mitteldeutscher Rundfunk Sendung Exakt,NA,4,0
+RHB,Reiterhof in Brandenburg,NA,4,2
+JGL,Jugendleite,NA,4,2
+EHFA,Ein Haus für alle Buch,NA,3,0
+URW,Ursula Wölfel,1,1,0
+VDB,Versand der Bewegung Rechter Online Shop,NA,4,2
+KAJ,Kosovo Albaner Junge der im Zug hilft,2,1,0
+NPDP,NPD Passau,NA,2,2
+VNPDP,Vorsitzender NPD Passau,2,1,2
+FNPDP,Junge Frau in der NPD Passau,1,1,1
+EFNPDP,Ehefrau in NPD Passau,1,1,2
+EMNPDP,Ehemann in NPD Passau,2,1,2
+VSH,Vier Sterne Hotel in Passau,NA,4,0
+CVSH,Chef des Vier Sterne Hotels in Passau,2,1,0
+KEFBS,Kumpel Eins von Felix Benneckenstein,2,1,NA
+JAMIG,Junge ausländische Männer im Gefängnis,2,1,0
+KVDW,KVDW Lied von FBS,NA,3,2
+BAF,Bock auf Freiheit Album von FBS,NA,3,2
+FBSBE,Felix Benneckenstein Bruder Eins Downsyndrom,2,1,0
+FBSBZ,Felix Benneckenstein Bruder Zwei,2,1,0
+FBSBD,Felix Benneckenstein Bruder Drei,2,1,0
+UDV,Udo Voigt,2,1,2
+THW,Thomas Wulff Steiner,2,1,2
+CHW,Christian Worch,2,1,2
+JOF,Joschka Fischer,2,1,0
+FFRB,Frau von Friedhelm Busse,1,1,NA
+PNP,Passauer Neue Presse,NA,3,0
+ANTF,Antifa-Fotograf für das Aida Archiv,2,1,0
+DB,Deutsche Behörden Jugendamt Arbeitsamt,NA,2,0
+PRF,Pro Familia,NA,2,0
+BBS,Baby Benneckenstein Fehlgeburt,NA,1,0
+MIM,Michael Müller,2,1,2
+PHH,Philipp Hasselbach,2,1,2
+C,Cindy Ex Freundin von Phillipp Hasselbach Name geändert,1,1,1
+KZFBS,Kumpel Zwei von Felix Benneckenstein,2,1,2
+BIAS,Bürgerinitiative Ausländerstopp,NA,2,2
+KAR,Karl Richter,2,1,2
+TC,Tochter von Cindy,1,1,0
+KHS,Karl Heinz Starnberger,2,1,2
+NS,Nationalsozialismus,0,4,3
+EXIT,Exit Aussteigerorganisation,NA,2,0
+ABAY,Verein zur Bewältigung neonazistischen Gedankgenguts und zur Förderung einer toleranten Gesellschaft Aussteigerhilfe Bayern eV,NA,2,0
+ENK,Eltern von Nina aus der Kita,1,1,0
+ZEIT,Zeit Online,NA,3,0
+SPO,Spiegel Online,NA,3,0
+KNSG,Konsumgesellschaft,NA,4,0
+EMKF,Emanzipierte Karriere Frauen,1,1,0
+BTG,Betreuungsgeld,NA,4,0
+NPDLT,NDP Landtagsabgeordnete ,1,1,2
+PNKM,Punk Mädchen aus Erding,1,1,0
