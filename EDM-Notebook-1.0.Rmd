@@ -1,0 +1,35 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+edges <- read.csv("EDM-Edgelist-1.10.csv", header = T, as.is = T)
+edges
+
+nodes <- read.csv("EDM-Nodelist-1.10.csv", header = T, as.is = T)
+nodes
+
+as.matrix(el)
+el=as.matrix(edges)
+
+k <- graph_from_data_frame(d=edges, vertices=nodes, directed=TRUE)
+k
+
+list.vertex.attributes(k)
+
+V(k)[(V(k)$nazi.weight == 0)]$color <-"grey40" # Person
+V(k)[(V(k)$nazi.weight == 1)]$color <-"grey60" 
+V(k)[(V(k)$nazi.weight == 2)]$color <-"grey90" 
+V(k)[(V(k)$nazi.weight == 3)]$color <-"red" 
+
+E(k)[(E(k)$family.weight == 1)]$color <- "red"
+E(k)[(E(k)$family.weight == 2)]$color <- "black"
+E(k)[(E(k)$family.weight == 3)]$color <- "yellow"
+E(k)[(E(k)$family.weight == 4)]$color <- "green"
+E(k)[(E(k)$family.weight == 5)]$color <- "brown"
+
+plot(k, layout=coords, rescale=FALSE, ylim = c(-9.0,9.0), xlim = c(-9.0,9.0), asp=0, vertex.label=NA, edge.width=E(k)$family.weight, coords <- layout_with_kk(k)*0.4)
+```
+
