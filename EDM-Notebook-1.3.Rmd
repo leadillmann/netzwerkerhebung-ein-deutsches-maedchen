@@ -1,0 +1,101 @@
+---
+title: "EDM Notebook 1.3"
+output: html_notebook
+---
+
+```{r Grundgerüst}
+library(igraph) # laden des igraph-objekts
+library(visNetwork)
+
+
+# GRUNDGERÜST (EDGELIST + NODELIST)
+edges <- read.csv("EDM-Edgelist-1.13.csv", header = T, as.is = T)
+edges
+
+nodes <- read.csv("EDM-Nodelist-1.13.csv", header = T, as.is = T)
+nodes
+
+head(edges)
+head(nodes)
+
+# Erstellung der Matrix der Edge- und Nodelist (keine Ahnung was uns das bringt)
+edges=as.matrix(edges)
+as.matrix(edges)
+edgematrix <- as.matrix(edges)
+
+nl=as.matrix(nodes)
+as.matrix(nl)
+
+# Name zuordnen
+edm <- graph_from_data_frame(d=edgematrix, vertices=nodes, directed=TRUE)
+edm
+
+# Auseinanderzerren
+coords <- layout_with_kk(edm)*0.4
+
+# Ausführen
+plot(edm, 
+          layout=coords, 
+          rescale=FALSE, ylim = c(-3.0,3.0), xlim = c(-3.0,3.0), asp=0,
+          edge.arrow.size=.2, 
+          vertex.label=NA,
+          vertex.label.color="darkblue",
+          vertex.color="lightgrey",
+          main="Ein Deutsches Mädchen",
+          sub="Bachmann, Dengler, Dillmann, Hommel, Lütgens, Senftl"
+     )
+  
+```
+
+```{r}
+
+HBSN <- make_ego_graph(edm, order = 1, nodes = V(edm)$name == "HBS", mode = "all")
+HBSN
+plot(HBSN[[1]]) 
+
+```
+
+
+
+```{r Teilnetzwerke, hier ist das Problem}
+
+
+FruheKindheit <- subgraph.edges(edm, E(edm)[relation = 1])
+FruheKindheit
+Kindheit <- subgraph.edges(edm, E(edm)[age == 2])
+Kindheit
+Pubertat <- subgraph.edges(edm, E(edm)[age == 3])
+Pubertat
+Jugend <- subgraph.edges(edm, E(edm)[age == 4])
+Jugend
+Erwachsen <- subgraph.edges(edm, E(edm)[age == 5])
+Erwachsen
+
+
+plot(FruheKindheit)
+plot(Kindheit)
+plot(Pubertat)
+plot(Jugend)
+plot(Erwachsen)
+
+
+```
+
+
+
+```{r Bouncy Ansicht}
+library(visNetwork) # Library Visnetwork laden
+# wenn das Paket nicht geladen wird, muessen Sie es vorher installieren!
+
+# igraph nach VisNetwork importieren
+# s bezieht sich hier auf unser vorher erstelltes Netzwerk
+toVisNetworkData(edm, idToLabel = TRUE) 
+
+# degrees berechnen
+degree(edm) 
+
+# statische Visualisierung
+visIgraph(edm) 
+
+
+```
