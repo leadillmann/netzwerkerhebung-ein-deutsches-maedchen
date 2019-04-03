@@ -1,0 +1,615 @@
+from,to,age,location,familyrelation,familyweight,relationweight
+HBS,FBS,5,München,1,1,3
+HBS,SBS,5,München,1,1,3
+FBS,SBS,5,München,1,1,3
+HBS,OMMS,5,6,1,3,1
+HBS,OMMS,5,6,1,3,1
+OMMS,OPMS,1,6,1,1,6
+OMMS,OPMS,2,6,1,1,6
+OMMS,OPMS,3,6,1,1,6
+OMMS,OPMS,4,6,1,1,6
+OMMS,OPMS,5,6,1,1,6
+HBS,LDFNJ,4,6,4,2,6
+HBS,LDFNJ,5,Dachboden OMMS,4,5,3
+HBS,JN,4,6,4,2,6
+HBS,JN,5,Dachboden OMMS,4,5,3
+HBS,HDJ,5,Dachboden OMMS,4,5,3
+HBS,NPD,5,Dachboden OMMS,4,5,3
+HBS,DVU,5,Dachboden OMMS,3,5,3
+HR,AP,4,Fürstenfeldbruck,4,5,3
+HBS,ST,4,6,4,2,2
+HBS,ST,5,Dachboden OMMS,4,5,3
+HBS,LS,4,6,4,2,2
+HBS,LS,5,Dachboden OMMS,4,5,3
+HBS,GBS,5,Dachboden OMMS,4,5,3
+HBS,GBS,4,6,4,2,2
+GBS,NSU,4,6,4,2,2
+HBS,VR,4,6,1,1,6
+HBS,OPVS,4,6,1,2,6
+HBS,OMVS,4,6,1,2,6
+HBS,HDJ,1,6,4,1,2
+HBS,HDJ,2,6,4,1,2
+HBS,HDJ,3,6,4,1,2
+HBS,JN,1,6,3,1,2
+HBS,JN,2,6,3,1,2
+HBS,JN,3,6,3,1,2
+HBS,POL,4,6,4,3,3
+HBS,BHiJ,3,Jena,4,2,2
+HBS,BHiJ,4,Jena,4,2,2
+HBS,BJ,5,6,2,3,2
+HBS,BJ,5,München,2,3,2
+HBS,NAL,5,6,4,2,1
+HBS,MR,5,6,1,1,3
+HBS,JSR,5,6,1,2,3
+HBS,BF,5,6,2,1,3
+MR,FVE,1,Fürstenfeldbruck,2,2,3
+MR,FVE,2,Fürstenfeldbruck,2,2,3
+MR,FVE,3,Fürstenfeldbruck,2,2,3
+VR,FVE,1,Fürstenfeldbruck,2,2,3
+VR,FVE,2,Fürstenfeldbruck,2,2,3
+VR,FVE,3,Fürstenfeldbruck,2,2,3
+HBS,TUN,5,6,4,2,6
+VR,MR,1,Fürstenfeldbruck,1,2,1
+VR,HR,1,Fürstenfeldbruck,6,6,6
+VR,HR,2,Fürstenfeldbruck,6,6,6
+VR,HR,3,Fürstenfeldbruck,6,6,6
+MR,HR,1,Fürstenfeldbruck,6,6,6
+MR,HR,2,Fürstenfeldbruck,6,6,6
+MR,HR,3,Fürstenfeldbruck,6,6,6
+HBS,HR,1,Fürstenfeldbruck,6,6,6
+HBS,HR,2,Fürstenfeldbruck,6,6,6
+HBS,HR,3,Fürstenfeldbruck,6,6,6
+ASR1,HR,1,Fürstenfeldbruck,6,6,6
+ASR1,HR,2,Fürstenfeldbruck,6,6,6
+ASR1,HR,3,Fürstenfeldbruck,6,6,6
+ASR2,HR,1,Fürstenfeldbruck,6,6,6
+ASR2,HR,2,Fürstenfeldbruck,6,6,6
+ASR2,HR,3,Fürstenfeldbruck,6,6,6
+JSR,HR,2,Fürstenfeldbruck,6,6,6
+JSR,HR,3,Fürstenfeldbruck,6,6,6
+HR,HDJ,1,Fürstenfeldbruck,4,2,1
+HR,HDJ,2,Fürstenfeldbruck,4,2,1
+HR,HDJ,3,Fürstenfeldbruck,4,2,1
+HR,BIMB,1,Fürstenfeldbruck,4,6,6
+HR,BIMB,2,Fürstenfeldbruck,4,6,6
+HR,BIMB,3,Fürstenfeldbruck,4,6,6
+HR,PAZ,1,Fürstenfeldbruck,4,6,6
+HR,PAZ,2,Fürstenfeldbruck,4,6,6
+HR,PAZ,3,Fürstenfeldbruck,4,6,6
+VR,HRF,1,Fürstenfeldbruck,4,1,3
+VR,HRF,2,Fürstenfeldbruck,4,1,3
+VR,HRF,3,Fürstenfeldbruck,4,1,3
+VR,SF,1,Fürstenfeldbruck,4,1,3
+VR,SF,2,Fürstenfeldbruck,4,1,3
+VR,SF,3,Fürstenfeldbruck,4,1,3
+VR,EMS,1,Fürstenfeldbruck,4,1,3
+VR,EMS,2,Fürstenfeldbruck,4,1,3
+VR,EMS,3,Fürstenfeldbruck,4,1,3
+HBS,EMS,1,Fürstenfeldbruck,4,1,3
+HBS,EMS,2,Fürstenfeldbruck,4,1,3
+HBS,EMS,3,Fürstenfeldbruck,4,1,3
+VR,SV,1,Fürstenfeldbruck,4,1,3
+VR,SV,2,Fürstenfeldbruck,4,1,3
+VR,SV,3,Fürstenfeldbruck,4,1,3
+MR,NR,1,Fürstenfeldbruck,2,3,1
+MR,NR,2,Fürstenfeldbruck,2,3,1
+MR,NR,3,Fürstenfeldbruck,2,3,1
+OMVS,BDM,1,6,4,2,3
+OMVS,BDM,2,6,4,2,3
+OMVS,BDM,3,6,4,2,3
+OMVS,HBS,1,6,1,2,2
+OMVS,HBS,2,6,1,2,2
+OMVS,HBS,3,6,1,2,2
+OMVS,ASR1,1,6,3,2,6
+OMVS,ASR1,2,6,3,2,6
+OMVS,ASR1,3,6,3,2,6
+OMVS,ASR2,1,6,3,2,6
+OMVS,ASR2,2,6,3,2,6
+OMVS,ASR2,3,6,3,2,6
+VR,ZOLL,1,München,3,1,3
+VR,ZOLL,2,München,3,1,3
+VR,ZOLL,3,München,3,1,3
+VR,AMP,1,6,4,3,3
+VR,AMP,2,6,4,3,3
+VR,AMP,3,6,4,3,3
+MR,AMP,1,6,4,3,3
+MR,AMP,2,6,4,3,3
+MR,AMP,3,6,4,3,3
+HR,ALDI,1,6,3,2,2
+HR,ALDI,2,6,3,2,2
+HR,ALDI,3,6,3,2,2
+HBS,OMMS,1,6,1,2,2
+HBS,OMMS,2,6,1,2,2
+HBS,OMMS,3,6,1,2,2
+HBS,PK,1,6,4,2,2
+HBS,BBK,1,6,4,2,2
+VR,DM,1,6,4,2,2
+VR,DM,2,6,4,2,2
+VR,DM,3,6,4,2,2
+VR,BM,1,6,4,2,2
+VR,BM,2,6,4,2,2
+VR,BM,3,6,4,2,2
+HBS,HH,3,6,4,1,3
+VR,HH,3,6,4,3,3
+OPVS,OMVS,6,6,1,6,6
+HBS,OPMS,5,6,1,3,2
+OPMS,VR,1,6,1,2,2
+OMMS,VR,1,6,1,2,2
+OPMS,VR,2,6,1,3,3
+OPMS,VR,3,6,1,3,3
+OMMS,VR,2,6,1,3,3
+OMMS,VR,3,6,1,3,3
+HBS,MR,1,6,1,1,3
+HBS,VR,1,6,1,2,1
+VR,ASR1,1,6,1,1,3
+VR,ASR2,1,6,1,1,3
+VR,HBS,1,6,1,2,3
+HBS,BIB,5,6,4,3,2
+ASR1,HBS,1,6,1,2,3
+ASR1,HBS,2,6,1,2,3
+ASR1,HBS,3,6,1,2,3
+ASR2,HBS,1,6,1,2,3
+ASR2,HBS,2,6,1,2,3
+ASR2,HBS,3,6,1,2,3
+VR,HBS,3,6,1,5,3
+VR,HBS,4,6,1,5,3
+VR,HBS,5,6,1,5,3
+OMVS,HBS,5,6,1,5,3
+OPVS,HBS,5,6,1,5,3
+ASR1,VR,5,6,1,1,2
+ASR1,HBS,5,6,1,5,3
+ASR2,HBS,5,6,1,5,3
+JSR,HBS,5,6,1,2,2
+MR,HBS,5,6,1,2,2
+HBS,L1,1,6,2,2,3
+HBS,SCH,1,6,3,2,3
+HBS,SCH,2,6,3,2,3
+HBS,SCH,3,6,3,2,3
+HBS,VSS,3,6,4,2,3
+HBS,KITA,5,München,4,1,3
+HBS,KGS,3,6,2,1,3
+HBS,KR,1,6,6,6,3
+VR,KR,1,6,6,6,3
+HBS,BFC,1,6,2,1,3
+HBS,LI,2,6,2,1,2
+HBS,LI,3,6,2,1,2
+VR,LI,2,6,2,4,3
+VR,LI,3,6,2,4,3
+ASR1,LI,2,6,2,3,3
+ASR1,LI,3,6,2,3,3
+ASR2,LI,2,6,2,3,3
+ASR2,LI,3,6,2,3,3
+HBS,TH,2,6,3,2,2
+HBS,L2,2,6,2,2,3
+HBS,L2,3,6,2,2,3
+MR,VR,2,6,1,3,3
+HBS,VR,2,6,1,1,3
+ASR2,PFF,2,6,1,6,6
+ASR2,PFF,3,6,1,6,6
+HBS,FGA,2,6,3,3,2
+HBS,FGA,3,6,3,3,2
+VR,FGA,2,6,3,3,1
+VR,FGA,3,6,3,3,1
+HBS,THIN,2,6,3,1,3
+HBS,KZ,3,Dachau,4,2,3
+VR,KZ,3,6,4,3,3
+HBS,KZ,4,Dachau,4,1,3
+HBS,KZ,5,Dachau,4,1,3
+HBS,WTAF,5,6,4,3,3
+HR,FHU,1,Balatonmáriafürdö,4,1,3
+HR,FHU,2,Balatonmáriafürdö,4,1,3
+HR,FHU,3,Balatonmáriafürdö,4,1,3
+OPVS,FHU,1,Balatonmáriafürdö,4,1,3
+OPVS,FHU,2,Balatonmáriafürdö,4,1,3
+OPVS,FHU,3,Balatonmáriafürdö,4,1,3
+OMVS,FHU,1,Balatonmáriafürdö,4,1,3
+OMVS,FHU,2,Balatonmáriafürdö,4,1,3
+OMVS,FHU,3,Balatonmáriafürdö,4,1,3
+HBS,UM,1,Balatonmáriafürdö,2,2,2
+HBS,UM,2,Balatonmáriafürdö,2,2,2
+HBS,UM,3,Balatonmáriafürdö,2,2,2
+VR,RZ,1,Nähe Kaliningrad,2,4,2
+HR,RZ,1,Nähe Kaliningrad,2,4,
+HBS,VR,1,Kaliningrad,1,2,2
+HBS,DK,1,Kaliningrad,2,2,2
+VR,DMU,1,Trakehnen,2,1,3
+VR,GST,1,Trakehnen,3,1,3
+DMU,GST,1,Trakehnen,3,1,3
+DMU,HDJ,1,6,3,1,3
+GST,AMS,1,Agnes Miegel Siedlung,3,6,6
+VR,AMS,1,Nähe Kaliningrad,3,1,2
+DMU,AMS,1,Nähe Kaliningrad,3,1,2
+AMS,AM,1,Agnes Miegel Siedlung,3,6,6
+GST,RE,1,Agnes Miegel Siedlung,3,1,3
+RE,AMS,1,Nähe Kaliningrad,3,1,3
+RE,AMS,2,Nähe Kaliningrad,3,1,3
+RE,AMS,3,Nähe Kaliningrad,3,1,3
+RE,BNP,3,6,3,1,3
+HF,AMS,1,Nähe Kaliningrad,3,1,3
+HF,AMS,2,Nähe Kaliningrad,3,1,3
+HF,AMS,3,Nähe Kaliningrad,3,1,3
+GST,HF,1,Agnes Miegel Siedlung,3,1,3
+HF,NZ,1,6,3,1,3
+GE,AMS,1,Nähe Kaliningrad,3,1,3
+GE,AMS,2,Nähe Kaliningrad,3,1,3
+GE,AMS,3,Nähe Kaliningrad,3,1,3
+GST,GE,1,Agnes Miegel Siedlung,3,1,6
+GE,HGWSS,1,6,3,1,3
+HR,BRL,1,Fürstenfeldbruck,4,6,6
+HR,BRL,2,Fürstenfeldbruck,4,6,6
+HR,BRL,3,Fürstenfeldbruck,4,6,6
+DMU,BRL,1,Fürstenfeldbruck,4,1,2
+DMU,BRL,2,Fürstenfeldbruck,4,1,2
+DMU,BRL,3,Fürstenfeldbruck,4,1,2
+HBS,BHJ,1,6,3,2,6
+HBS,BHJ,2,6,3,2,6
+HBS,BHJ,3,6,3,2,6
+HBS,HDJ,1,6,3,2,6
+HBS,HDJ,2,6,3,2,6
+HBS,HDJ,3,6,3,2,6
+BHJ,WJ,1,6,3,2,6
+FR,WJ,1,6,3,1,6
+FR,NPD,4,6,3,1,6
+GK,WJ,1,Donaueschingen,3,1,6
+GK,WJ,2,Donaueschingen,3,1,6
+GK,WJ,3,Donaueschingen,3,1,6
+GK,OFA,1,München,4,6,6
+GK,OFA,2,München,4,6,6
+GK,OFA,3,München,4,6,6
+HDJ,WS,4,6,3,4,3
+HDJ,HJ,1,6,3,2,6
+HDJ,HJ,2,6,3,2,6
+HDJ,HJ,3,6,3,2,6
+HDJ,DEJ,1,6,4,2,3
+HDJ,DEJ,1,6,4,2,3
+HDJ,DEJ,1,6,4,2,3
+HDJ,DEJ,1,6,4,2,3
+HDJ,HA,1,6,4,4,3
+HDJ,HA,2,6,4,4,3
+HDJ,HA,3,6,4,4,3
+HDJ,HA,4,6,4,4,3
+HBS,HDJ,2,Polen,3,2,2
+HDJ,KPF,2,Polen,3,3,3
+HBS,JZ,2,6,2,2,3
+JZ,HDJ,2,6,3,2,6
+HBS,HDJ,2,NA,3,2,2
+HDJ,BRD,1,6,3,2,3
+HDJ,BRD,2,6,3,2,3
+HDJ,BRD,3,6,3,2,3
+HDJ,BRD,4,6,3,2,3
+HBS,HDJ,1,Görlitz,3,2,3
+MR,HDJ,1,NA,3,3,3
+HBS,ASR1,1,Görlitz,1,1,2
+HBS,ASR2,1,Görlitz,1,1,2
+HBS,HDJA,1,Görlitz,4,2,6
+HBS,VR,1,Fürstenfeldbruck,1,1,3
+HBS,MR,1,Fürstenfeldbruck,1,1,3
+HDJ,FF,1,6,4,1,6
+HDJ,FF,2,6,4,1,6
+HDJ,FF,3,6,4,1,6
+HDJ,FF,4,6,4,1,6
+FF,WES,1,6,4,2,2
+FF,WES,2,6,4,2,2
+FF,WES,3,6,4,2,2
+FF,WES,4,6,4,2,2
+HDJ,NPD,1,6,3,1,3
+HDJ,NPD,2,6,3,1,3
+HDJ,NPD,3,6,3,1,3
+HDJ,NPD,4,6,3,1,3
+TIN,HDJ,1,6,3,1,3
+TIN,HDJ,2,6,3,1,3
+TIN,HDJ,3,6,3,1,3
+TIN,HDJ,4,6,3,1,3
+TIN,NPD,1,6,3,1,3
+TIN,NPD,2,6,3,1,3
+TIN,NPD,3,6,3,1,3
+TIN,NPD,4,6,3,1,3
+DAP,HDJ,1,6,3,1,3
+DAP,HDJ,2,6,3,1,3
+DAP,HDJ,3,6,3,1,3
+DAP,HDJ,4,6,3,1,3
+DAP,NPD,1,6,3,1,3
+DAP,NPD,2,6,3,1,3
+DAP,NPD,3,6,3,1,3
+DAP,NPD,4,6,3,1,3
+DAP,DWW,6,6,4,1,6
+DWW,NSU,2,6,4,3,2
+ALB,WJ,1,6,3,1,6
+ALB,WJ,2,6,3,1,6
+ALB,WJ,3,6,3,1,6
+ALB,WJ,4,6,3,1,6
+ALB,HDJ,1,6,3,1,3
+ALB,HDJ,2,6,3,1,3
+ALB,HDJ,3,6,3,1,3
+ALB,HDJ,4,6,3,1,3
+JRG,HDJ,1,6,3,2,3
+JRG,HDJ,2,6,3,2,3
+JRG,HDJ,3,6,3,2,3
+JRG,HDJ,4,6,3,2,3
+JRG,NPD,1,6,3,1,3
+JRG,NPD,2,6,3,1,3
+JRG,NPD,3,6,3,1,3
+JRG,NPD,4,6,3,1,3
+JRG,NPD,5,6,3,1,3
+HBS,ALS,1,6,2,2,3
+HBS,ALS,2,6,2,2,3
+ALS,HDJ,1,6,3,1,3
+ALS,HDJ,2,6,3,1,3
+SER,HDJ,1,Reichenwalde,3,1,3
+SER,HDJ,2,Reichenwalde,3,1,3
+SER,HDJ,3,Reichenwalde,3,1,3
+SER,HDJ,4,Reichenwalde,3,1,3
+SER,WJ,1,6,3,2,6
+SER,WJ,2,6,3,2,6
+SER,WJ,3,6,3,2,6
+SER,WJ,4,6,3,2,6
+HBS,SER,2,6,2,2,3
+HBS,SER,3,6,2,2,3
+JN,IGFL,4,6,3,2,6
+AFPA,DJS,4,6,3,3,3
+IM,DJS,4,6,3,3,2
+JN,AGGG,4,6,3,2,6
+JUR,AGGG,1,6,3,1,3
+JUR,AGGG,2,6,3,1,
+JUR,AGGG,3,6,3,1,
+JUR,AGGG,4,6,3,1,
+WON,WJ,1,6,3,1,6
+WON,RAW,5,6,2,2,6
+WON,RW,3,6,2,2,6
+WON,SYS,5,6,2,2,6
+WON,WGN,5,6,1,1,6
+WON,WGN,3,6,1,1,6
+WGN,WJ,2,6,3,1,6
+WON,RN,1,6,1,1,6
+WON,RN,2,6,1,1,6
+RN,WJ,1,6,3,1,6
+UDP,NPD,3,6,3,1,6
+SIS,NPD,5,6,3,1,6
+BEZ,NSU,5,6,3,1,6
+BEZ,UWM,5,6,2,2,6
+BEZ,UWB,5,6,2,2,6
+UWM,NSU,5,6,3,1,6
+UWB,NSU,5,6,3,1,6
+HBS,JN,3,6,3,2,3
+HBS,NPDT,3,Fürstenfeldbruck,3,2,3
+HBS,UDP,3,Fürstenfeldbruck,2,3,3
+UDP,NPD,3,6,3,1,6
+HBS,FBS,3,Fürstenfeldbruck,2,3,3
+HBS,EF,3,Bautzen,2,1,3
+HBS,VR,3,Fürstenfeldbruck,1,3,1
+HBS,EF,3,Thüringen,2,1,3
+HBS,FDV,3,Thüringen,4,1,3
+EF,FDV,3,Thüringen,4,1,3
+HBS,BHiJ,3,Jena,3,1,6
+EF,BHiJ,3,Jena,3,1,6
+RAW,BHiJ,3,Jena,3,1,6
+RAW,NSU,3,6,3,1,6
+HBS,TTNJ,4,Jena,3,1,6
+HBS,BHiJ,4,Jena,3,1,6
+HBS,RAW,3,Jena,2,3,2
+HBS,EF,3,6,2,2,3
+TOL,NPD,2,6,3,5,3
+TOL,NPD,1,6,3,1,3
+HBS,FBS,3,Erding,2,1,3
+HBS,KSE,4,Erding,3,1,3
+FBS,FBSF,4,Erding,2,1,3
+HBS,FBSF,4,Erding,2,3,2
+HBS,CHR,4,Erding,2,2,2
+HBS,M,4,Erding,2,2,1
+HBS,S,4,Erding,2,2,2
+S,VS,4,Erding,1,3,3
+HBS,NOB,4,Erding,2,3,3
+FBS,NOB,4,Erding,2,1,3
+NOB,KSAS,2,München,3,1,3
+AN,ANA,2,6,3,3,3
+AN,ANA,3,6,3,3,3
+AN,ANA,4,6,3,3,3
+HBS,PNKJ,4,Erding,2,3,3
+FBS,PNKJ,4,Erding,2,3,3
+HBS,IND,4,Erding,2,3,1
+HBS,ETT,3,Erding,4,6,3
+HBS,PNKM,3,Erding,2,3,3
+HBS,BEA,3,Erding,2,3,2
+HBS,VRZF,3,Sachsen,1,3,1
+HBS,FBS,3,6,2,5,3
+FBS,KSDO,3,Dortmund,3,4,3
+FRB,FBS,3,Dortmund,2,5,2
+HBS,FRB,3,6,2,4,2
+FRB,KSDO,3,Dortmund,3,1,3
+FBS,KSDO,3,München,3,5,3
+FBS,KLF,3,Dortmund,3,2,3
+FBS,FBSF,3,Dortmund,2,3,1
+HBS,RGR,1,Rostock,6,4,3
+HBS,RGM,1,Mölln,6,4,3
+HBS,RGS,1,Solingen,6,4,3
+HBS,AMSY,2,München,6,3,3
+MAW,AMSY,2,München,6,1,6
+KSM,MAW,5,München,3,4,3
+HBS,MAW,5,München,3,3,2
+HBS,FNM,3,München,3,4,1
+HBS,FNM,4,München,3,4,1
+HBS,ANA,4,6,2,3,3
+HBS,AH,3,6,6,4,3
+HBS,AH,4,6,6,4,3
+HBS,USA,1,6,3,4,3
+HBS,JUD,1,6,3,4,2
+HBS,WST,1,6,4,4,3
+HBS,KNSG,1,6,6,4,3
+HBS,KNSG,2,6,6,4,3
+HBS,KNSG,3,6,6,4,3
+HBS,KNSG,4,6,6,4,3
+HBS,EMKF,1,6,6,4,3
+HBS,EMKF,2,6,6,4,3
+HBS,EMKF,3,6,6,4,3
+HBS,EMKF,4,6,6,4,3
+HBS,BTG,3,6,4,4,2
+HBS,BTG,4,6,4,4,2
+HBS,NPDLT,3,6,4,4,2
+HBS,AUSL,1,Erding,6,3,1
+HBS,AUSL,2,Erding,6,3,1
+HBS,AUSL,3,Erding,6,3,1
+HBS,AUSL,4,Erding,6,3,1
+HBS,JKNG,3,Fürstenfeldbruck,2,3,3
+HBS,ISL,1,6,6,3,2
+HBS,ISL,1,6,6,3,2
+HBS,ISL,1,6,6,3,2
+HBS,ISL,1,6,6,3,2
+HBS,PAD,2,6,6,4,3
+HBS,PAD,3,6,6,4,3
+HBS,PAD,4,6,6,4,3
+AN,PAD,3,6,4,6,3
+HBS,THF,4,Internet,4,3,1
+FBS,THF,4,Internet,4,2,3
+HBS,ALM,4,Internet,4,4,1
+HBS,TFRB,4,Internet,2,4,1
+HBS,TFO,4,Internet,2,4,1
+HBS,TFS,4,Internet,2,4,1
+VVS,THF,4,6,3,5,2
+HBS,HEG,1,6,6,4,3
+HBS,HEG,2,6,6,4,3
+HBS,HEG,3,6,6,4,3
+HBS,HEG,4,6,6,4,3
+HBS,MAB,1,6,6,4,3
+HBS,MAB,2,6,6,4,3
+HBS,MAB,3,6,6,4,3
+HBS,MAB,4,6,6,4,3
+HBS,RUH,1,6,6,4,3
+HBS,RUH,2,6,6,4,3
+HBS,RUH,3,6,6,4,3
+HBS,RUH,4,6,6,4,3
+HBS,HAR,1,6,6,4,3
+HBS,HAR,2,6,6,4,3
+HBS,HAR,3,6,6,4,3
+HBS,HAR,4,6,6,4,3
+VR,NSFD,1,Quitzdorfer See,6,1,3
+HBS,NSFD,1,Quitzdorfer See,6,6,3
+HBS,NSFD,2,Quitzdorfer See,6,6,3
+HBS,NSFD,3,Quitzdorfer See,6,6,3
+HBS,NSFD,4,Quitzdorfer See,6,6,3
+HBS,WSF,1,Quitzdorfer See,4,6,1
+HBS,VRZF,1,Quitzdorfer See,1,3,1
+HBS,VRZF,2,Quitzdorfer See,1,3,1
+HBS,VRZF,3,Quitzdorfer See,1,3,1
+HBS,SSW,2,Quitzdorfer See,1,2,1
+HBS,SSW,3,Quitzdorfer See,1,2,1
+NPD,NSFD,4,Quitzdorfer See,3,2,2
+DTS,NSFD,4,Quitzdorfer See,3,2,2
+SLE,NSFD,4,Quitzdorfer See,4,2,1
+MDR,NSFD,4,Quitzdorfer See,4,6,6
+SPO,NSFD,4,Quitzdorfer See,4,6,6
+HDJ,NSFD,4,Quitzdorfer See,3,2,6
+SPO,RHB,4,Brandenburg,3,6,6
+HBS,JGL,3,Quitzdorfer See,6,1,3
+HDJ,JGL,3,Quitzdorfer See,3,6,6
+OMMS,JGL,3,Quitzdorfer See,1,6,6
+OPMS,JGL,3,Quitzdorfer See,1,6,6
+OMVS,JGL,3,Quitzdorfer See,1,6,6
+OPVS,JGL,3,Quitzdorfer See,1,6,6
+VR,JGL,3,Quitzdorfer See,1,6,6
+VRZF,JGL,3,Quitzdorfer See,1,6,6
+MR,JGL,3,Quitzdorfer See,1,6,6
+SSW,JGL,3,Quitzdorfer See,1,6,6
+HBS,SSW,3,Quitzdorfer See,1,2,2
+HBS,MR,2,Zuhause,1,6,6
+HBS,VR,2,Auto,1,1,3
+HBS,EHFA,2,Zuhause,4,6,3
+VR,EHFA,2,Auto,4,6,1
+HBS,VR,2,Zuhause,1,3,2
+HBS,VR,3,Zuhause,1,3,2
+HBS,VDB,4,6,6,6,6
+HBS,TLA,4,Konzert,2,3,1
+HBS,FBS,4,Konzert,1,1,6
+HBS,KAJ,4,Zug,2,3,3
+HBS,KKM,3,Schule,2,3,1
+HBS,KSE,4,6,2,2,2
+FBS,KSE,4,6,2,2,2
+HBS,FBS,3,6,1,1,2
+FBS,HBS,3,6,1,1,2
+HBS,VRZF,2,Quitzdorfer See,1,3,3
+HBS,VRZF,3,Quitzdorfer See,1,3,3
+VRZF,HBS,2,Quitzdorfer See,1,3,3
+VRZF,HBS,3,Quitzdorfer See,1,3,3
+VR,HBS,2,Quitzdorfer See,1,3,3
+VR,HBS,3,Quitzdorfer See,1,3,3
+HBS,MR,4,Passau,1,1,3
+HBS,LHFS,4,Passau,2,2,2
+HBS,NPDP,4,Passau,3,2,2
+HBS,VNPDP,4,Stammtisch im Wirtshaus,2,3,6
+HBS,FNPDP,4,Stammtisch im Wirtshaus,2,3,6
+HBS,EFNPDP,4,Stammtisch im Wirtshaus,2,3,6
+HBS,EMNPDP,4,Stammtisch im Wirtshaus,2,3,6
+EFNPDP,EMNPDP,4,6,1,1,2
+EMNPDP,EFNPDP,4,6,1,1,2
+HBS,VSH,4,Vier-Sterne-Hotel,3,2,3
+HBS,CVSH,4,Vier-Sterne-Hotel,2,3,2
+HBS,FBS,4,Passau,1,1,2
+HBS,KEFBS,4,Passau,2,3,6
+KEFBS,FBS,4,6,2,2,2
+FBS,KEFBS,4,6,2,2,2
+FBS,JAMIG,4,Gefängnis,2,2,3
+FBS,KVDW,4,6,4,2,6
+FBS,BAF,4,6,4,2,6
+HBS,FBS,4,Passau,1,1,2
+HBS,KEFBS,4,Passau,2,3,6
+KEFBS,FBS,4,6,2,2,2
+FBS,KEFBS,4,6,2,2,2
+FBS,JAMIG,4,Gefängnis,2,2,3
+FBS,KVDW,4,6,4,2,6
+FBS,BAF,4,6,4,2,6
+FBS,FBSBE,3,6,1,1,3
+FBS,FBSBE,4,6,1,1,3
+FBS,FBSBZ,3,6,1,6,6
+FBS,FBSBZ,4,6,1,6,6
+FBS,FBSBD,3,6,1,6,6
+FBS,FBSBD,4,6,1,6,6
+FBSV,FBS,4,6,1,1,3
+FBSM,FBS,4,6,1,1,3
+FBS,FBSV,4,6,1,3,3
+FBS,FBSM,4,6,1,3,3
+HBS,FRB,4,Passau,2,3,2
+HBS,UDV,4,Passau,2,4,6
+HBS,THW,4,Passau,2,4,1
+HBS,ANTF,4,Passau,2,2,3
+HBS,POL,4,6,3,3,1
+UDV,FFRB,4,Passau,2,4,1
+HBS,FBS,4,München,1,1,3
+FBS,HBS,4,München,1,1,3
+HBS,PRF,4,München,3,3,1
+HBS,BBS,4,München,1,1,3
+FBS,BBS,4,München,1,1,3
+FBS,MIM,4,München,2,1,3
+MIM,FBS,4,München,2,1,3
+HBS,UDP,4,München,2,3,1
+HBS,MAW,4,München,2,3,1
+HBS,UDV,4,München,2,4,1
+HBS,KSM,4,München,2,5,1
+FBS,KSM,4,München,2,2,2
+FBS,NPD,4,6,3,2,2
+HBS,FBS,4,München,1,3,2
+HBS,KSM,4,München,2,5,1
+HBS,PHH,4,München,2,3,1
+HBS,C,4,München,2,2,2
+C,HBS,4,München,2,2,2
+FBS,KZFBS,4,München,2,1,3
+SPO,FBS,4,6,3,4,1
+PHH,BIAS,5,München,3,2,2
+PHH,KAR,5,München,2,1,3
+HBS,C,4,München,2,2,2
+FBS,PHH,4,München,2,2,1
+THF,FBS,4,6,3,5,1
+KSM,FBS,4,München,2,5,1
+HBS,NSU,4,Zwickau / Jena,3,4,3
+HBS,NSU,5,München,3,5,3
+HBS,NS,4,München,4,5,1
+HBS,NS,5,München,4,5,3
+KHS,HBS,4,6,2,3,2
+HBS,BEZ,4,6,2,2,2
+HBS,UWM,3,Jena,2,2,2
+HBS,UWB,3,Jena,2,2,2
+HBS,EXIT,4,6,3,1,6
+HBS,ABAY,4,München,3,1,6
+FBS,EXIT,4,6,3,1,6
+FBS,ABAY,4,München,3,1,6
+ABAY,EXIT,5,München,3,1,6
+ZEIT,HBS,5,6,4,2,6
+HBS,ENK,5,München,2,3,2
