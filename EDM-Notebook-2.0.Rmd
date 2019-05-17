@@ -1,0 +1,1248 @@
+---
+title: "EDM Notebook 1.9"
+output: html_notebook
+---
+
+```{r Grundgerüst}
+library("igraph")
+library("visNetwork")
+
+# GRUNDGERÜST (EDGELIST + NODELIST)
+edges <- read.csv("Edgelist 4.0-Tabelle 1.csv", header = T, as.is = T)
+edges
+nodes <- read.csv("Nodelist 4.3-Tabelle 1-1.csv", header = T, as.is = T)
+
+
+edges=as.matrix(edges)
+as.matrix(edges)
+edgematrix <- as.matrix(edges)
+nl=as.matrix(nodes)
+as.matrix(nl)
+
+edm <- graph_from_data_frame(d=edgematrix, vertices=nodes, directed=F) #oder d=edgematrix
+edm
+
+edges(edm) # wie viele Kanten beinhaltet das Gesamt Ego-Netzwerk und welche Kanten-Attribute gibt es
+vertex(edm) # wie viele Knoten beinhaltet das Gesamt Ego-Netzwerk und welche Knoten-Attribute gibt es
+
+cw <- cluster_walktrap(edm) #Clusternalayse des Netzwerkes
+edge_density(edm) #Dichte des Netzwerkes
+
+simplenetworkedm <- simplify(edm, remove.multiple = TRUE, remove.loops = TRUE) #entfernen der doppelten uns selbstreferentiellen Beziehungen im Netzwerk
+edge_density(simplenetworkedm) #Dichte des Netzwerks
+
+farthest_vertices(edm)
+get_diameter(edm) #Durchmesser des Netzwerks
+mean_distance(edm) #Mittlere Pfaddistanz im Netzwerk
+degree(edm) # Wie viele Kanten empfangen/senden die Knoten
+edge_density(edm)
+betweenness(edm)
+
+plot(rnorm(100))
+
+plot(edm,
+          layout=layout_with_kk, # Layout 
+          rescale=FALSE, ylim = c(-12.0,12.0), xlim = c(-12.0,12.0), asp=0, # "Zoom"
+          vertex.frame.color="NA", # Randfarbe der Knoten
+          vertex.color="white", # Farbe der Knoten
+          #vertex.label=NA, # Anzeige der Labels
+          vertex.label.color="black", # Farbe der Schrift bei Labels
+          edge.color="black", # Farbe der Kanten
+          main="Ein Deutsches Mädchen", # Überschrift
+          sub="Bachmann, Dengler, Dillmann, Hommel, Lütgens, Senftl", # Unterschrift
+          #edge.width=E(edm)$familyweight, # Dicke der Kanten nach Familyweight, hier kommentiert weil Übersichtlichkeit
+          #vertex.size=40, # Größe der Knoten
+          vertex.label.family="Calibri" # Schriftart der Labels
+     )
+  
+```
+
+```{r Größe des Netzwerks nach Orgas, Personen und Kulturen}
+# Kantenfarben zurücksetzen
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+# alle löschen in Nodelist, die 0 also Person sind, Heidi ist als einzige 1
+Hsex <- delete_vertices(edm, V(edm)[category>"1"])
+
+# Heidis Ego-Netzwerk, Stufe 1, visualisiert nach Geschlecht
+EgoHBSsex <- make_ego_graph(Hsex, order=5, c("Heidi Benneckenstein"))
+
+```
+
+```{r Visualisierung nach four-mode Netzwerk}
+
+V(edm)[(V(edm)$category=="0")]$shape <- "circle" # 0 = nur Personen
+V(edm)[(V(edm)$category=="1")]$shape <- "circle" # 1 = nur Heidi
+V(edm)[(V(edm)$category=="2")]$shape <- "square" # 2 = nur Orgas
+V(edm)[(V(edm)$category=="3")]$shape <- "square" # 3 = nur Schriften/Kultur
+V(edm)[(V(edm)$category=="4")]$shape <- "square" # 4 = nur Sonstiges
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(edm, 
+          layout=layout_with_kk, 
+          rescale=FALSE, ylim = c(-12.0,12.0), xlim = c(-12.0,12.0), asp=0,
+          vertex.label=NA,
+          vertex.frame.color="NA",
+          vertex.label.color="black",
+          edge.color="black",
+          vertex.color="white",
+          main="Ein Deutsches Mädchen",
+          sub="Heidis Ego-Netzwerk, Unterteilung in Personen, Orgas, Schriften und Sonstiges"
+     )
+```
+
+
+
+```{r Ego-Netzwerk von HBS 1.Order}
+
+# Kantenfarben zurücksetzen
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+Hilfsnetzwerk <- delete_vertices(edm, V(edm)[category>"1"])
+
+# Heidis Ego-Netzwerk, Stufe 1, visualisiert nach nazi-weight, nur Personen
+EgoHBS <- make_ego_graph(Hilfsnetzwerk, order=1, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS[[1]])[(V(EgoHBS[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS[[1]])[(V(EgoHBS[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS[[1]])[(V(EgoHBS[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS[[1]])[(V(EgoHBS[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS[[1]])[(V(EgoHBS[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, Färbung nach Nazi-Weight"
+     #edge.width=E(edm)$familyweight,
+     )
+
+```
+
+```{r Ego-Netzwerk von HBS nach nazi-weight}
+
+# Kantenfarben zurücksetzen
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+# alle löschen in Nodelist, die 0 also Person sind, Heidi ist als einzige 1
+H2 <- delete_vertices(edm, V(edm)[category<"1"])
+
+vertex(edm)
+
+# alle löschen in Nodelist, die 0 also kein nazi sind
+edmnazi <- delete_vertices(edm, V(edm)[naziweight<"1"])
+vertex(edmnazi)
+
+# alle löschen in Nodelist, die nazi sind
+edmkeinnazi <- delete_vertices(edm, V(edm)[naziweight>"0"])
+vertex(edmkeinnazi)
+
+
+# Heidis Ego-Netzwerk, Stufe 1, visualisiert nach nazi-weight, nur Orgas und Kultur/Schriften und Sonstiges
+EgoHBS2 <- make_ego_graph(H2, order=6, c("Heidi Benneckenstein"))
+vertex(EgoHBS2[[1]])
+
+# Färbung nach Nazi-Weight
+V(EgoHBS2[[1]])[(V(EgoHBS2[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS2[[1]])[(V(EgoHBS2[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS2[[1]])[(V(EgoHBS2[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS2[[1]])[(V(EgoHBS2[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS2[[1]])[(V(EgoHBS2[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS2[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, Färbung nach Nazi-Weight, nur Orgas, Schriften, Sonstiges",
+     edge.width=E(edm)$familyweight
+     )
+
+```
+
+```{r Ego-Netzwerk von HBS in früher Kindheit (0 bis 7)}
+
+#E(edm)[(E(edm)$familyrelation == "1" )]$color <- "#E878FF" # 1 = nur Familie = rosa
+#E(edm)[(E(edm)$familyrelation == "2" )]$color <- "#9389FF" # 2 = nur der Bekanntenkreis =lila
+
+H3 <- delete_edges(edm, E(edm)[age>"1"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+vertex(H3)
+
+
+EgoHBS3 <- make_ego_graph(H3, order=1, c("Heidi Benneckenstein")) # Egonetzwerk von Heidi generieren
+
+EgoHBS32 <- make_ego_graph(H3, order=2, c("Heidi Benneckenstein")) # Egonetzwerk von Heidi generieren
+
+vertex(EgoHBS3[[1]]) #Anzeigen lassen der Knoten und Kanten im frühen Kindheits-Netzwerk
+
+# alle löschen in Nodelist, die 0 also kein nazi sind
+H3Nazi <- delete_vertices(EgoHBS3[[1]], V(EgoHBS3[[1]])[naziweight<"1"])
+vertex(H3Nazi)
+
+# alle löschen in Nodelist, die nazi sind
+H3keinNazi <- delete_vertices(EgoHBS3[[1]], V(EgoHBS3[[1]])[naziweight>"0"])
+vertex(H3keinNazi)
+
+#plot(EgoHBS3[[1]], vertex.size=degree(EgoHBS3[[1]]))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS3[[1]])[(V(EgoHBS3[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS3[[1]])[(V(EgoHBS3[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS3[[1]])[(V(EgoHBS3[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS3[[1]])[(V(EgoHBS3[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS3[[1]])[(V(EgoHBS3[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+par(mfrow=c(2,2), mar=c(0,0,2,2))
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS3[[1]],
+     layout=layout_with_kk,
+     vertex.size=3, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Ego-Netzwerk, Order=1, Nazi-Weight, Fruehe Kindheit",
+     edge.width=E(edm)$familyweight
+     )
+
+plot(EgoHBS32[[1]],
+     layout=layout_with_kk,
+     vertex.size=3, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Ego-Netzwerk, Order=2, Nazi-Weight, Fruehe Kindheit",
+     edge.width=E(edm)$familyweight
+     )
+```
+
+```{r Ego-Netzwerk von HBS in Kindheit (8 bis 12)}
+
+#E(edm)[(E(edm)$familyrelation == "1" )]$color <- "#E878FF" # 1 = nur Familie, Kantenfarbe=rosa
+#E(edm)[(E(edm)$familyrelation == "2" )]$color <- "#9389FF" # 2 = nur der Bekanntenkreis, Kantenfarbe=lila
+
+H4 <- delete_edges(edm, E(edm)[age>"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H5 <- delete_edges(H4, E(H4)[age<"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+
+EgoHBS4 <- make_ego_graph(H5, order=1, c("Heidi Benneckenstein")) # Egonetzwerk von Heidi generieren
+
+# alle löschen in Nodelist, die 0 also kein nazi sind
+H5Nazi <- delete_vertices(EgoHBS4[[1]], V(EgoHBS4[[1]])[naziweight<"1"])
+vertex(H5Nazi)
+
+# alle löschen in Nodelist, die nazi sind
+H5keinNazi <- delete_vertices(EgoHBS4[[1]], V(EgoHBS4[[1]])[naziweight>"0"])
+vertex(H5keinNazi)
+
+vertex(EgoHBS4[[1]]) # alle knoten und kanten aus dem Zeitraum Kindheit
+
+# Färbung nach Nazi-Weight
+V(EgoHBS4[[1]])[(V(EgoHBS4[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS4[[1]])[(V(EgoHBS4[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS4[[1]])[(V(EgoHBS4[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS4[[1]])[(V(EgoHBS4[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS4[[1]])[(V(EgoHBS4[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS4[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, Färbung nach Nazi-Weight, Kindheit",
+     edge.width=E(edm)$familyweight
+     )
+
+plot(EgoHBS4[[1]], 
+     vertex.size=degree(EgoHBS4[[1]]),
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, Färbung nach Nazi-Weight, Kindheit",
+     edge.width=E(edm)$familyweight)
+
+```
+
+```{r Ego-Netzwerk von HBS in Pubertät (13 bis 14 )}
+
+H6 <- delete_edges(edm, E(edm)[age>"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertät stammen
+H7 <- delete_edges(H6, E(H6)[age<"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertät stammen
+
+edges(H7)
+vertex(H7)
+
+EgoHBS5 <- make_ego_graph(H7, order=1, c("Heidi Benneckenstein")) # Egonetzwerk von Heidi generieren
+
+# alle löschen in Nodelist, die 0 also kein nazi sind
+H7Nazi <- delete_vertices(EgoHBS5[[1]], V(EgoHBS5[[1]])[naziweight<"1"])
+vertex(H7Nazi)
+
+# alle löschen in Nodelist, die nazi sind
+H7keinNazi <- delete_vertices(EgoHBS5[[1]], V(EgoHBS5[[1]])[naziweight>"0"])
+vertex(H7keinNazi)
+
+vertex(EgoHBS5[[1]])
+
+# Färbung nach Nazi-Weight
+V(EgoHBS5[[1]])[(V(EgoHBS5[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS5[[1]])[(V(EgoHBS5[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS5[[1]])[(V(EgoHBS5[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS5[[1]])[(V(EgoHBS5[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS5[[1]])[(V(EgoHBS5[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS5[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, Färbung nach Nazi-Weight, Pubertät",
+     edge.width=E(edm)$familyweight
+     )
+
+plot(EgoHBS5[[1]], 
+     vertex.size=degree(EgoHBS5[[1]]),
+     layout=layout_nicely,
+     vertex.label.family="Calibri",
+     #vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, Färbung nach Nazi-Weight, Pubertät",
+     edge.width=E(edm)$familyweight)
+
+```
+
+```{r Ego-Netzwerk von HBS in Jugend (15 bis 20)}
+
+H8 <- delete_edges(edm, E(edm)[age>"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertät stammen
+H9 <- delete_edges(H8, E(H8)[age<"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertät stammen
+
+edges(H9)
+vertex(H9)
+
+EgoHBS6 <- make_ego_graph(H9, order=1, c("Heidi Benneckenstein")) # Egonetzwerk von Heidi generieren
+
+# alle löschen in Nodelist, die 0 also kein nazi sind
+H9Nazi <- delete_vertices(EgoHBS6[[1]], V(EgoHBS6[[1]])[naziweight<"1"])
+vertex(H9Nazi)
+
+# alle löschen in Nodelist, die nazi sind
+H9keinNazi <- delete_vertices(EgoHBS6[[1]], V(EgoHBS6[[1]])[naziweight>"0"])
+vertex(H9keinNazi)
+
+vertex(EgoHBS6[[1]])
+
+# Färbung nach Nazi-Weight
+V(EgoHBS6[[1]])[(V(EgoHBS6[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS6[[1]])[(V(EgoHBS6[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS6[[1]])[(V(EgoHBS6[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS6[[1]])[(V(EgoHBS6[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS6[[1]])[(V(EgoHBS6[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS6[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, visualisiert nach Nazi-Weight, Jugend",
+     edge.width=E(edm)$familyweight
+     )
+
+plot(EgoHBS6[[1]], 
+     vertex.size=degree(EgoHBS6[[1]]),
+     layout=layout_nicely,
+     vertex.label.family="Calibri",
+     #vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, visualisiert nach Nazi-Weight und Degree, Jugend",
+     edge.width=E(edm)$familyweight)
+
+```
+```{r Ego-Netzwerk von HBS im Erwachsenenalter (21 bis 25 Jahre)}
+
+H10 <- delete_edges(edm, E(edm)[age>"5"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertät stammen
+H11 <- delete_edges(H10, E(H10)[age<"5"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertät stammen
+
+edges(H11)
+vertex(H11)
+
+EgoHBS7 <- make_ego_graph(H11, order=1, c("Heidi Benneckenstein")) # Egonetzwerk von Heidi generieren
+
+# alle löschen in Nodelist, die 0 also kein nazi sind
+H11Nazi <- delete_vertices(EgoHBS7[[1]], V(EgoHBS7[[1]])[naziweight<"1"])
+vertex(H11Nazi)
+
+# alle löschen in Nodelist, die nazi sind
+H11keinNazi <- delete_vertices(EgoHBS7[[1]], V(EgoHBS7[[1]])[naziweight>"0"])
+vertex(H11keinNazi)
+
+vertex(EgoHBS7[[1]])
+
+# Färbung nach Nazi-Weight
+V(EgoHBS7[[1]])[(V(EgoHBS7[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS7[[1]])[(V(EgoHBS7[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS7[[1]])[(V(EgoHBS7[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS7[[1]])[(V(EgoHBS7[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS7[[1]])[(V(EgoHBS7[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS7[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, visualisiert nach Nazi-Weight, Erwachsen",
+     edge.width=E(edm)$familyweight
+     )
+
+plot(EgoHBS7[[1]], 
+     vertex.size=degree(EgoHBS7[[1]]),
+     layout=layout_nicely,
+     vertex.label.family="Calibri",
+     #vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Heidis Ego-Netzwerk, Stufe 1, visualisiert nach Nazi-Weight und Degree, Erwachsen",
+     edge.width=E(edm)$familyweight)
+
+```
+
+```{r Ego-Netzwerk von NSU}
+
+# Kantenfarbe zurücksetzen
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+# EGO-NETZWERK DES NSU, STUFE 1
+EgoNSU <- make_ego_graph(edm, order=1, c("NSU"))
+
+# Färbung nach Nazi-Weight
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+par(mfrow=c(2,2), mar=c(0,0,2,2))
+
+plot(EgoNSU[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     #edge.color="black",
+     vertex.label.cex=2.0,
+     edge.color="black",
+     sub="Ego-Netzwerk von NSU, Stufe 1, Färbung nach Nazi-Weight",
+     edge.width=E(edm)$familyweight
+     )
+
+
+# EGO-NETZWERK DES NSU, STUFE 2
+EgoNSU <- make_ego_graph(edm, order=2, c("NSU"))
+
+# Färbung nach Nazi-Weight
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoNSU[[1]])[(V(EgoNSU[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+#plot(rnorm(100))
+
+plot(EgoNSU[[1]],
+     layout=layout_nicely,
+     vertex.size=2, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     #edge.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Ego-Netzwerk von NSU, Stufe 2, Färbung nach Nazi-Weight",
+     #edge.width=E(edm)$familyweight
+     )
+
+
+```
+```{r Ego-Netzwerk von Vater Redeker}
+EgoVR<- make_ego_graph(edm, order=1, c("Vater Redeker"))
+
+# Färbung nach Nazi-Weight
+V(EgoVR[[1]])[(V(EgoVR[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoVR[[1]])[(V(EgoVR[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoVR[[1]])[(V(EgoVR[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoVR[[1]])[(V(EgoVR[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoVR[[1]])[(V(EgoVR[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoVR[[1]],
+     layout=layout_nicely,
+     vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     edge.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Vater Redeker Ego-Netzwerk, Stufe 1, Färbung nach Nazi-Weight",
+     edge.width=E(edm)$familyweight
+     )
+
+```
+
+```{r Ego-Netzwerk von HBS nach Kultur}
+
+
+# Kantenfarben zurücksetzen
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H12 <- delete_edges(edm, E(edm)[familyrelation<"4"]) # alle Kanten bzw. Knoten löschen, die nicht zu Schriften zählen
+H13 <- delete_edges(H12, E(H12)[familyrelation>"4"]) # alle Kanten bzw. Knoten löschen, die nicht zu Schriften zählen
+
+EgoHBS8 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein")) # Egonetzwerk von Heidi generieren über alle fünf Phasen
+
+H3 <- delete_edges(edm, E(edm)[age>"1"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+vertex(H3)
+K1 <- delete_vertices(H3, V(H3)[category<"1"]) # alle Knoten löschen, die Personen sind
+plot(K1,
+     layout=layout_nicely,
+     vertex.size=3, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     edge.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Kultur HBS Frühe Kindheit",
+     edge.width=E(edm)$familyweight
+     )
+
+# Färbung nach Nazi-Weight
+V(EgoHBS8[[1]])[(V(EgoHBS8[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS8[[1]])[(V(EgoHBS8[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS8[[1]])[(V(EgoHBS8[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS8[[1]])[(V(EgoHBS8[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS8[[1]])[(V(EgoHBS8[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS8[[1]],
+     layout=layout_nicely,
+     vertex.size=3, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     edge.color="black",
+     vertex.label.cex=.8,
+     edge.color="black",
+     sub="Kultur HBS Order 1",
+     edge.width=E(edm)$familyweight
+     )
+
+```
+```{r Ego-Netzwerk von HBS in früher Kindheit Kultur}
+
+H14 <- delete_edges(edm, E(edm)[age>"1"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis frueher Kindheit stammen
+
+H12 <- delete_edges(H14, E(H14)[familyrelation<"4"]) # alle Kanten bzw. Knoten löschen, die nicht zu Schriften zählen
+H13 <- delete_edges(H12, E(H12)[familyrelation>"4"]) # alle Kanten bzw. Knoten löschen, die nicht zu Schriften zählen
+
+EgoHBS9 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(EgoHBS9[[1]])
+
+```
+
+
+```{r Ego-Netzwerk von HBS in Kindheit Kultur}
+
+H16 <- delete_edges(edm, E(edm)[age<"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H17 <- delete_edges(H16, E(H16)[age>"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+
+H12 <- delete_edges(H17, E(H17)[familyrelation<"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+H13 <- delete_edges(H17, E(H17)[familyrelation>"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+
+```
+
+```{r Ego-Netzwerk von HBS in Pubertät Kultur}
+
+H19 <- delete_edges(edm, E(edm)[age<"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+H20 <- delete_edges(H19, E(H19)[age>"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+
+H12 <- delete_edges(H20, E(H20)[familyrelation<"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+H13 <- delete_edges(H20, E(H20)[familyrelation>"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in Jugend Kultur}
+
+H22 <- delete_edges(edm, E(edm)[age<"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+H23 <- delete_edges(H22, E(H22)[age>"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+
+H12 <- delete_edges(H23, E(H23)[familyrelation<"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+H13 <- delete_edges(H23, E(H23)[familyrelation>"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in Erwachsen Kultur}
+
+H25 <- delete_edges(edm, E(edm)[age<"5"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Erwachsenenalter stammen
+
+H12 <- delete_edges(H25, E(H25)[familyrelation<"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+H13 <- delete_edges(H25, E(H25)[familyrelation>"4"]) # alle Knoten löschen, die nicht zu Schriften zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in früher Kindheit Personen}
+
+H14 <- delete_edges(edm, E(edm)[age>"1"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis frueher Kindheit stammen
+
+H13 <- delete_edges(H14, E(H14)[familyrelation>"2"]) # alle Knoten löschen, die nicht zu Personen zählen
+
+EgoHBS9 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(EgoHBS9[[1]])
+
+```
+
+
+```{r Ego-Netzwerk von HBS in Kindheit Personen}
+
+H16 <- delete_edges(edm, E(edm)[age<"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H17 <- delete_edges(H16, E(H16)[age>"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+
+H13 <- delete_edges(H17, E(H17)[familyrelation>"2"]) # alle Knoten löschen, die nicht zu Personen zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+
+```
+
+```{r Ego-Netzwerk von HBS in Pubertät Personen}
+
+H19 <- delete_edges(edm, E(edm)[age<"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+H20 <- delete_edges(H19, E(H19)[age>"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+
+H13 <- delete_edges(H20, E(H20)[familyrelation>"2"]) # alle Knoten löschen, die nicht zu Personen zählenz
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in Jugend Personen}
+
+H22 <- delete_edges(edm, E(edm)[age<"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+H23 <- delete_edges(H22, E(H22)[age>"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+
+H13 <- delete_edges(H23, E(H23)[familyrelation>"2"]) # alle Knoten löschen, die nicht zu Personen zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in Erwachsen Personen}
+
+H25 <- delete_edges(edm, E(edm)[age<"5"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Erwachsenenalter stammen
+
+H13 <- delete_edges(H25, E(H25)[familyrelation>"2"]) # alle Knoten löschen, die nicht zu Personen zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in früher Kindheit Organisationen}
+
+H14 <- delete_edges(edm, E(edm)[age>"1"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis frueher Kindheit stammen
+
+H12 <- delete_edges(H14, E(H14)[familyrelation<"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+H13 <- delete_edges(H12, E(H12)[familyrelation>"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+
+EgoHBS9 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(EgoHBS9[[1]])
+
+```
+
+
+```{r Ego-Netzwerk von HBS in Kindheit Organisationen}
+
+H16 <- delete_edges(edm, E(edm)[age<"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H17 <- delete_edges(H16, E(H16)[age>"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+
+H12 <- delete_edges(H17, E(H17)[familyrelation<"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+H13 <- delete_edges(H12, E(H12)[familyrelation>"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+
+```
+
+```{r Ego-Netzwerk von HBS in Pubertät Organisationen}
+
+H19 <- delete_edges(edm, E(edm)[age<"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+H20 <- delete_edges(H19, E(H19)[age>"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+
+H12 <- delete_edges(H20, E(H20)[familyrelation<"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+H13 <- delete_edges(H12, E(H12)[familyrelation>"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in Jugend Organisationen}
+
+H22 <- delete_edges(edm, E(edm)[age<"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+H23 <- delete_edges(H22, E(H22)[age>"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+
+H12 <- delete_edges(H23, E(H23)[familyrelation<"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+H13 <- delete_edges(H12, E(H12)[familyrelation>"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in Erwachsen Organisationen}
+
+H25 <- delete_edges(edm, E(edm)[age<"5"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Erwachsenenalter stammen
+
+H12 <- delete_edges(H25, E(H25)[familyrelation<"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+H13 <- delete_edges(H12, E(H12)[familyrelation>"3"]) # alle Knoten löschen, die nicht zu Organisation zählen
+
+H13 <- make_ego_graph(H13, order=100, c("Heidi Benneckenstein"))
+vertex(H13[[1]])
+```
+
+```{r Ego-Netzwerk von HBS in früher Kindheit nur enge Beziehung 1.Order}
+
+# Kantenfarben zurücksetzen
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H14 <- delete_edges(edm, E(edm)[age>"1"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis frueher Kindheit stammen
+
+H15 <- delete_edges(H14, E(H14)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS9 <- make_ego_graph(H15, order=1, c("Heidi Benneckenstein"))
+
+
+# Färbung nach Nazi-Weight
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS9[[1]])[(E(EgoHBS9[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS9[[1]])[(E(EgoHBS9[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot1 <- plot(EgoHBS9[[1]],
+     layout=layout_with_kk,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=2.5,
+     vertex.size=degree(EgoHBS9[[1]])+7,
+     sub="Ego-Netzwerk von Heidi Benneckenstein, Färbung nach Nazi-Weight, frühe Kindheit, nur enge Beziehungen von HBS"
+     )
+
+
+
+```
+
+```{r Ego-Netzwerk von HBS in früher Kindheit nur enge Beziehung 2.Order}
+
+# Kantenfarben zurücksetzen
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H14 <- delete_edges(edm, E(edm)[age>"1"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis frueher Kindheit stammen
+
+H15 <- delete_edges(H14, E(H14)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS9 <- make_ego_graph(H15, order=2, c("Heidi Benneckenstein"))
+
+
+# Färbung nach Nazi-Weight
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS9[[1]])[(V(EgoHBS9[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS9[[1]])[(E(EgoHBS9[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS9[[1]])[(E(EgoHBS9[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(EgoHBS9[[1]],
+     layout=layout_with_kk,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=1.3,
+     vertex.size=degree(EgoHBS9[[1]])+7,
+     sub="Ego-Netzwerk von Heidi Benneckenstein, Färbung nach Nazi-Weight, frühe Kindheit, nur enge Beziehungen von HBS, 2.Order"
+     )
+
+```
+
+```{r Ego-Netzwerk von HBS in Kindheit nur enge Beziehung 1.Order}
+
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H16 <- delete_edges(edm, E(edm)[age<"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H17 <- delete_edges(H16, E(H16)[age>"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H18 <- delete_edges(H17, E(H17)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS10 <- make_ego_graph(H18, order=1, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS10[[1]])[(E(EgoHBS10[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS10[[1]])[(E(EgoHBS10[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(rnorm(100))
+
+plot2 <- plot(EgoHBS10[[1]],
+     layout=layout_with_kk,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=2.5,
+     vertex.size=degree(EgoHBS10[[1]])+7,
+     sub="Ego-Netzwerk von Heidi Benneckenstein, Färbung nach Nazi-Weight, Kindheit, nur enge Beziehungen"
+     )
+
+```
+
+
+```{r Ego-Netzwerk von HBS in Kindheit nur enge Beziehung 2.Order}
+
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H16 <- delete_edges(edm, E(edm)[age<"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H17 <- delete_edges(H16, E(H16)[age>"2"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Kindheit stammen
+H18 <- delete_edges(H17, E(H17)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS10 <- make_ego_graph(H18, order=2, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS10[[1]])[(V(EgoHBS10[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS10[[1]])[(E(EgoHBS10[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS10[[1]])[(E(EgoHBS10[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(EgoHBS10[[1]],
+     layout=layout_with_kk,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=1.3,
+     vertex.size=degree(EgoHBS10[[1]])+7,
+     sub="Ego-Netzwerk von Heidi Benneckenstein, Färbung nach Nazi-Weight, Kindheit, nur enge Beziehungen von HBS, 2.Order"
+     )
+```
+
+```{r Ego-Netzwerk von HBS in Pubertät nur enge Beziehung 1.Order}
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H19 <- delete_edges(edm, E(edm)[age<"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+H20 <- delete_edges(H19, E(H19)[age>"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+H21 <- delete_edges(H20, E(H20)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS11 <- make_ego_graph(H21, order=1, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS11[[1]])[(E(EgoHBS11[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS11[[1]])[(E(EgoHBS11[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot3 <- plot(EgoHBS11[[1]],
+     layout=layout_with_kk,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=2.5,
+     vertex.size=degree(EgoHBS11[[1]])+7,
+     sub="Heidis Ego-Netzwerk, Färbung nach Nazi-Weight, Pubertät, nur enge Beziehungen 1.Order"
+     )
+
+```
+
+```{r Ego-Netzwerk von HBS in Pubertät nur enge Beziehung 2.Order}
+
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H19 <- delete_edges(edm, E(edm)[age<"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+H20 <- delete_edges(H19, E(H19)[age>"3"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Pubertaet stammen
+H21 <- delete_edges(H20, E(H20)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS11 <- make_ego_graph(H21, order=2, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS11[[1]])[(V(EgoHBS11[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS11[[1]])[(E(EgoHBS11[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS11[[1]])[(E(EgoHBS11[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(rnorm(100))
+
+plot(EgoHBS11[[1]],
+     layout=layout_nicely,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=1.3,
+     vertex.size=degree(EgoHBS11[[1]])+7,
+     sub="Heidis Ego-Netzwerk, Färbung nach Nazi-Weight, Pubertät, nur enge Beziehungen 2.Order")
+     
+```
+
+
+```{r Ego-Netzwerk von HBS in Jugend nur enge Beziehung 1.Order}
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H22 <- delete_edges(edm, E(edm)[age<"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+H23 <- delete_edges(H22, E(H22)[age>"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+H24 <- delete_edges(H23, E(H23)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS12 <- make_ego_graph(H24, order=1, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS12[[1]])[(E(EgoHBS12[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS12[[1]])[(E(EgoHBS12[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(rnorm(100))
+
+plot4 <- plot(EgoHBS12[[1]],
+     layout=layout_with_kk,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=2.5,
+     vertex.size=degree(EgoHBS12[[1]])+7,
+     sub="Heidis Ego-Netzwerk, Färbung nach Nazi-Weight, Jugend, nur enge Beziehungen 1.Order"
+     )
+
+```
+
+```{r Ego-Netzwerk von HBS in Jugend nur enge Beziehung 2.Order}
+
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H22 <- delete_edges(edm, E(edm)[age<"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+H23 <- delete_edges(H22, E(H22)[age>"4"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Jugend stammen
+H24 <- delete_edges(H23, E(H23)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS12 <- make_ego_graph(H24, order=2, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS12[[1]])[(V(EgoHBS12[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS12[[1]])[(E(EgoHBS12[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS12[[1]])[(E(EgoHBS12[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(rnorm(100))
+
+plot(EgoHBS12[[1]],
+     layout=layout_nicely,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=1.3,
+     vertex.size=degree(EgoHBS12[[1]])+7,
+     sub="Heidis Ego-Netzwerk, Färbung nach Nazi-Weight, Jugend, nur enge Beziehungen 2.Order"
+     )
+```
+
+```{r Ego-Netzwerk von HBS in Erwachsen nur enge Beziehung 1.Order}
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H25 <- delete_edges(edm, E(edm)[age<"5"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Erwachsenenalter stammen
+H26 <- delete_edges(H25, E(H25)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS13 <- make_ego_graph(H26, order=1, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS13[[1]])[(E(EgoHBS13[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS13[[1]])[(E(EgoHBS13[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(rnorm(100))
+
+plot5 <- plot(EgoHBS13[[1]],
+     layout=layout_with_kk,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=2.5,
+     vertex.size=degree(EgoHBS13[[1]])+7,
+     sub="Heidis Ego-Netzwerk, Erwachsen, nur enge Beziehungen 1.Order"
+     #edge.width=E(edm)$familyweight
+     )
+
+```
+
+```{r Ego-Netzwerk von HBS in Erwachsen nur enge Beziehung 2.Order}
+E(edm)[(E(edm)$familyweight > "1" )]$color <- "grey"
+E(edm)[(E(edm)$familyweight < "5" )]$color <- "grey"
+
+H25 <- delete_edges(edm, E(edm)[age<"5"]) # alle Kanten bzw Knoten löschen, die nicht aus Heidis Erwachsenenalter stammen
+H26 <- delete_edges(H25, E(H25)[familyweight>"1"]) # alle Kanten löschen, die nicht der Beziehung "eng" entsprechen
+EgoHBS13 <- make_ego_graph(H26, order=2, c("Heidi Benneckenstein"))
+
+# Färbung nach Nazi-Weight
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="1")]$color  <- "#BF7B43" # Mitläufer, hellbraun
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="2")]$color  <- "#80532D" # Nazi, braun
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="3")]$color  <- "#402916" # Nazi-Größe, dunkelbraun
+V(EgoHBS13[[1]])[(V(EgoHBS13[[1]])$naziweight=="6")]$color  <- "#FFFFFF" # nicht zugeordnet, weiß
+
+# Färbung nach family-relation
+E(EgoHBS13[[1]])[(E(EgoHBS13[[1]])$familyrelation=="1")]$color <- "#800A01" # Familie dunkelrot
+E(EgoHBS13[[1]])[(E(EgoHBS13[[1]])$familyrelation=="2")]$color <- "#004D11" # Bekannte dunkelgrün
+
+plot(EgoHBS13[[1]],
+     layout=layout_nicely,
+     vertex.label.family="Calibri",
+     #vertex.color="white",
+     #vertex.frame.color="transparent",
+     vertex.label.color="black",
+     vertex.label.dist=-2,
+     #edge.color="black",
+     edge.width=2,
+     vertex.label.cex=1.3,
+     vertex.size=degree(EgoHBS13[[1]])+7,
+     sub="Heidis Ego-Netzwerk, Erwachsen, nur enge Beziehungen 2.Order"
+     #edge.width=E(edm)$familyweight
+     )
+
+```
+
+```{r Übersicht enge Beziehungen von HBS}
+# legt fest, dass die Visualisierung in einer Tabelle von 2x2 Feldern definiert werden
+par(mfrow=c(2,3), mar=c(0,0,2,2))
+
+# definiert unterschiedliche Algorithmen
+plot(EgoHBS9[[1]], layout=layout_with_kk, main="Fruehe Kindheit")
+plot(EgoHBS10[[1]], layout=layout_with_kk, main="Kindheit")
+plot(EgoHBS11[[1]], layout=layout_with_kk, main="Pubertaet")
+plot(EgoHBS12[[1]], layout=layout_with_kk, main="Jugend")
+plot(EgoHBS13[[1]], layout=layout_with_kk, main="Erwachsen")
+
+
+```
+
+```{r Gesamtnetzwerk nach nazi-weight und eng}
+
+#H27 <- delete_vertices(edm [degree > "20"])
+#ins <- degree(edm)
+#subgraph(edm, KCoreComponents[edm, 10], VertexShapeFunction -> "Name")
+#EgoVR <- make_ego_graph(H27, order=1, c("Heidi B"))
+
+
+H27 <- delete_vertices(edm, V(edm)[degreeweight<"10"]) # alle Kanten bzw Knoten löschen, die degree Wert unter 10 besitzen
+EgoHBS14 <- make_ego_graph(H27, order=1, c("Heidi Benneckenstein"))
+
+ins <- degree(H27)
+ins
+
+#Färbung nach Nazi-Weight
+V(EgoHBS14[[1]])[(V(EgoHBS14[[1]])$naziweight=="0")]$color <- "#D6D6D6" # kein Nazi, sehr helles grau
+V(EgoHBS14[[1]])[(V(EgoHBS14[[1]])$naziweight=="1")]$color <- "#A9A9A9" # Mitläufer, hellgrau
+V(EgoHBS14[[1]])[(V(EgoHBS14[[1]])$naziweight=="2")]$color <- "#5F5E5F" # Nazi, dunkelgrau
+V(EgoHBS14[[1]])[(V(EgoHBS14[[1]])$naziweight=="3")]$color <- "#000000" # Nazi-Größe, schwarz
+V(EgoHBS14[[1]])[(V(EgoHBS14[[1]])$naziweight=="6")]$color <- "#FFFFFF" # nicht zugeordnet, weiß
+
+#par(bg="#DB2900")
+plot(rnorm(100))
+
+plot(EgoHBS14[[1]],
+     layout=layout_nicely,
+     #vertex.size=10, 
+     vertex.label.family="Calibri",
+     vertex.frame.color="NA",
+     #vertex.label=NA,
+     vertex.label.color="black",
+     edge.color="black",
+     vertex.label.cex=.8,
+     sub="Gesamtnetzwerk nach nazi-weight und eng und betweenness",
+     vertex.size=ins*0.4,
+     edge.width=E(edm)$familyweight
+     )
+
+```
+
+```{r Bouncy Ansicht}
+library("visNetwork")
+
+visIgraph(edm)
+
+```
+
+```{r Credits}
+
+# Made with love and much sweat by Team EDM
+
+```
+
